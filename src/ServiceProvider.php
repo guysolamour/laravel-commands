@@ -3,7 +3,6 @@
 namespace Guysolamour\Command;
 
 use Guysolamour\Command\Console\Commands\Database\FillModel;
-use Guysolamour\Command\Console\Commands\Entity\CreateEntity;
 use Guysolamour\Command\Console\Commands\Database\DropDatabase;
 use Guysolamour\Command\Console\Commands\Database\CreateDatabase;
 use Guysolamour\Command\Console\Commands\Helper\CreateHelperCommand;
@@ -25,7 +24,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 CreateDatabase::class,
                 DropDatabase::class,
                 FillModel::class,
-                CreateEntity::class,
                 CreateProviderCommand::class,
                 CreateHelperCommand::class,
                 CreateTraitCommand::class,
@@ -41,4 +39,3 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         );
     }
 }
-

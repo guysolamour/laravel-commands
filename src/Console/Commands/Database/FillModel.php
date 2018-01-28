@@ -11,88 +11,99 @@ use Illuminate\Container\Container;
 class FillModel extends Command
 {
 
-    private const EXCLUDE_FIELDS = ['id','created_at','updated_at'];
+    private const EXCLUDE_FIELDS = ['id', 'created_at', 'updated_at'];
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'commands:model:fill {name}';
+    protected $signature = 'cmd:model:fill {model}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fill the model';
+    protected $description = 'Fill model';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+
+    public function handle()
     {
-        parent::__construct();
-    }
+
+        $argument = $this->argument('model');
+
+        $parts = explode("/", $argument);
 
 
-    public function handle(){
+        $model = $this->getNamespace();
 
-        $argument = $this->argument('name');
-
-        $parts = explode("/",$argument);
-
-        $model = $this->getNamespace() ;
-
-
-
-        foreach ($parts as $value) {
-            $model .= '\\' . $value;
+        if (1 === count($parts) && !empty($model_folder  = config('command.models_folder', ''))) {
+            $model .= sprintf("\%s\%s", $model_folder, ucfirst(end($parts)));
+        } else {
+            foreach ($parts as $value) {
+                $model .= '\\' . ucfirst($value);
+            }
         }
 
+        // check if model exists
+        if (!class_exists($model)) {
+            $this->error(
+                sprintf("The [%s] model does not exists", $model)
+            );
+            return;
+        }
 
         $table_name = $this->getTableName(end($parts));
 
-
-
         $table_fields = $this->getTableFields($table_name);
 
-        new A;
-
-        dd($model, $table_name,  $table_fields);
-
-        $fields = [];
+        $model = new $model;
 
         foreach ($table_fields as $field) {
-          $fields[$field] =   $this->ask('Enter ' . $field);
+            if ($field === 'password') {
+                $model->$field =   $this->secret('Enter ' . $field);
+            } else {
+                $model->$field =   $this->ask('Enter ' . $field);
+            }
         }
 
+        $model->save();
 
-        $model::create($fields);
 
-        $this->info('Model filled succesfuly');
-
-       // dd($model);
+        $this->info("Model filled succesfuly");
     }
 
-    private function getTableName(string $name) :string{
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function getTableName(string $name): string
+    {
         return strtolower(Str::plural($name));
     }
 
-    private function getModelName() :string{
+    /**
+     * @return string
+     */
+    private function getModelName(): string
+    {
         return ucfirst($this->argument('name'));
     }
 
-    private function getTableFields(string $table_name) :array {
+    /**
+     * @param string $table_name
+     * @return array
+     */
+    private function getTableFields(string $table_name): array
+    {
         $table_fields = Schema::getColumnListing($table_name);
 
-        return array_diff($table_fields,self::EXCLUDE_FIELDS);
-
+        return array_diff($table_fields, self::EXCLUDE_FIELDS);
     }
 
-     /**
+    /**
      * Get project namespace
      * Default: App
      * @return string
