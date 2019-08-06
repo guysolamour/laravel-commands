@@ -1,40 +1,34 @@
 {
-  "name": "guysolamour/laravel-useful-commands",
-  "description": "A laravel useful commands",
+  "name": "guysolamour/command",
+  "description": "A command",
   "license": "MIT",
   "keywords": [
-    "laravel",
-    "useful",
-    "commands"
+    "command"
   ],
   "type": "library",
   "authors": [
     {
-      "name": "Guy-roland ASSALE",
-      "email": "rolandassale@gmail.com"
+      "name": "",
+      "email": ""
     }
   ],
   "require": {
-    "php": ">=7.0",
-    "creativeorange/gravatar": "^1.0",
-    "illuminate/support": "~5.8.0"
+    "php": ">=7.2",
+    "illuminate/support": "^6.0"
   },
   "require-dev": {
-    "orchestra/testbench": "~3.8.0",
-    "phpunit/phpunit": "^7.0"
+    "orchestra/testbench": "^4.0",
+    "phpunit/phpunit": "^8.0"
   },
   "autoload": {
     "psr-4": {
-      "Guysolamour\\LaravelUsefulCommands\\": "src"
+      "Guysolamour\\Command\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Guysolamour\\LaravelUsefulCommands\\Tests\\": "tests"
-    },
-    "files": [
-      "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"
-    ]
+      "Guysolamour\\Command\\Tests\\": "tests"
+    }
   },
   "scripts": {
     "phpunit": "phpunit"
@@ -42,7 +36,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Guysolamour\\LaravelUsefulCommands\\ServiceProvider"
+        "Guysolamour\\Command\\ServiceProvider"
       ]
     }
   },

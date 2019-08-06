@@ -1,14 +1,12 @@
-# Laravel Useful Commands
+# Command
 
-[![Build Status](https://travis-ci.org/guysolamour/laravel-useful-commands.svg?branch=master)](https://travis-ci.org/guysolamour/laravel-useful-commands)
+[![Build Status](https://travis-ci.org/guysolamour/command.svg?branch=master)](https://travis-ci.org/guysolamour/command)
 [![styleci](https://styleci.io/repos/CHANGEME/shield)](https://styleci.io/repos/CHANGEME)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/guysolamour/laravel-useful-commands/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/guysolamour/laravel-useful-commands/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/CHANGEME/mini.png)](https://insight.sensiolabs.com/projects/CHANGEME)
-[![Coverage Status](https://coveralls.io/repos/github/guysolamour/laravel-useful-commands/badge.svg?branch=master)](https://coveralls.io/github/guysolamour/laravel-useful-commands?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/guysolamour/command/badge.svg?branch=master)](https://coveralls.io/github/guysolamour/command?branch=master)
 
-[![Packagist](https://img.shields.io/packagist/v/guysolamour/laravel-useful-commands.svg)](https://packagist.org/packages/guysolamour/laravel-useful-commands)
-[![Packagist](https://poser.pugx.org/guysolamour/laravel-useful-commands/d/total.svg)](https://packagist.org/packages/guysolamour/laravel-useful-commands)
-[![Packagist](https://img.shields.io/packagist/l/guysolamour/laravel-useful-commands.svg)](https://packagist.org/packages/guysolamour/laravel-useful-commands)
+[![Packagist](https://img.shields.io/packagist/v/guysolamour/command.svg)](https://packagist.org/packages/guysolamour/command)
+[![Packagist](https://poser.pugx.org/guysolamour/command/d/total.svg)](https://packagist.org/packages/guysolamour/command)
+[![Packagist](https://img.shields.io/packagist/l/guysolamour/command.svg)](https://packagist.org/packages/guysolamour/command)
 
 Package description: CHANGE ME
 
@@ -16,30 +14,13 @@ Package description: CHANGE ME
 
 Install via composer
 ```bash
-composer require guysolamour/laravel-useful-commands
-```
-
-### Register Service Provider
-
-**Note! This and next step are optional if you use laravel>=5.5 with package
-auto discovery feature.**
-
-Add service provider to `config/app.php` in `providers` section
-```php
-Guysolamour\LaravelUsefulCommands\ServiceProvider::class,
-```
-
-### Register Facade
-
-Register package facade in `config/app.php` in `aliases` section
-```php
-Guysolamour\LaravelUsefulCommands\Facades\LaravelUsefulCommands::class,
+composer require guysolamour/command
 ```
 
 ### Publish Configuration File
 
 ```bash
-php artisan vendor:publish --provider="Guysolamour\LaravelUsefulCommands\ServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Guysolamour\Command\ServiceProvider" --tag="config"
 ```
 
 ## Usage
@@ -53,8 +34,8 @@ instead of using the issue tracker.
 
 ## Credits
 
-- [](https://github.com/guysolamour/laravel-useful-commands)
-- [All contributors](https://github.com/guysolamour/laravel-useful-commands/graphs/contributors)
+- [](https://github.com/guysolamour/command)
+- [All contributors](https://github.com/guysolamour/command/graphs/contributors)
 
 This package is bootstrapped with the help of
 [melihovv/laravel-package-generator](https://github.com/melihovv/laravel-package-generator).

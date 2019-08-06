@@ -1,12 +1,12 @@
 <?php
 
-namespace Guysolamour\LaravelUsefulCommands\Tests;
+namespace Guysolamour\Command\Tests;
 
-use Guysolamour\LaravelUsefulCommands\Facades\LaravelUsefulCommands;
-use Guysolamour\LaravelUsefulCommands\ServiceProvider;
+use Guysolamour\Command\Facades\Command;
+use Guysolamour\Command\ServiceProvider;
 use Orchestra\Testbench\TestCase;
 
-class LaravelUsefulCommandsTest extends TestCase
+class CommandTest extends TestCase
 {
     protected function getPackageProviders($app)
     {
@@ -16,7 +16,7 @@ class LaravelUsefulCommandsTest extends TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'laravel-useful-commands' => LaravelUsefulCommands::class,
+            'command' => Command::class,
         ];
     }
 
