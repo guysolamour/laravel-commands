@@ -3,11 +3,12 @@
 namespace Guysolamour\Command;
 
 
+use Guysolamour\Command\Console\Commands\Admin\Edit;
 use Guysolamour\Command\Console\Commands\Admin\Create;
 use Guysolamour\Command\Console\Commands\Admin\Delete;
-use Guysolamour\Command\Console\Commands\Admin\Edit;
-use Guysolamour\Command\Console\Commands\Database\CreateDatabase;
+use Guysolamour\Command\Console\Commands\Helper\CreateHelper;
 use Guysolamour\Command\Console\Commands\Database\DropDatabase;
+use Guysolamour\Command\Console\Commands\Database\CreateDatabase;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -26,6 +27,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 Edit::class,
                 CreateDatabase::class,
                 DropDatabase::class,
+                CreateHelper::class,
             ]);
         }
     }
