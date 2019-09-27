@@ -1,5 +1,5 @@
 <?php
-namespace Guysolamour\LaravelUsefulCommands\Console\Commands\Admin;
+namespace Guysolamour\Command\Console\Commands\Admin;
 
 
 use Illuminate\Console\Command;
@@ -17,13 +17,17 @@ abstract class Base extends Command
      */
     protected function adminModel()
     {
-        return config('useful-commands.admin_model');
+        return config('command.admin_model');
     }
 
     public function __construct()
     {
         parent::__construct();
         $model = $this->adminModel();
+
+        if (!class_exists($model)) {
+            return;
+        };
         $this->admin = new $model();
     }
     /**

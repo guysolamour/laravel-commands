@@ -1,5 +1,5 @@
 <?php
-namespace Guysolamour\LaravelUsefulCommands\Console\Commands\Db;
+namespace Guysolamour\Command\Console\Commands\Database;
 
 
 use Illuminate\Console\Command;
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 class DropDatabase extends Command
 {
 
-    use DbTrait;
+    use DatabaseTrait;
 
     /**
      * The name and signature of the console command.

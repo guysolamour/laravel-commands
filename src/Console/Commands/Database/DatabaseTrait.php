@@ -1,12 +1,12 @@
 <?php
 
-namespace Guysolamour\LaravelUsefulCommands\Console\Commands\Db;
+namespace Guysolamour\Command\Console\Commands\Database;
 
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
-trait DbTrait
+trait DatabaseTrait
 {
     private $DEFAULT_CONNECTIONS = [
         'sqlite','mysql'

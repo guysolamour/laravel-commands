@@ -1,6 +1,6 @@
 <?php
 
-namespace Guysolamour\LaravelUsefulCommands\Console\Commands\Db;
+namespace Guysolamour\Command\Console\Commands\Database;
 
 use Illuminate\Console\Command;
 
@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 class CreateDatabase extends Command
 {
 
-    use DbTrait;
+    use DatabaseTrait;
 
 
     /**
@@ -62,7 +62,7 @@ class CreateDatabase extends Command
                 break;
         }
 
-        $this->info("The [$schemaName] database created successfully with [{$connection}]");
+        $this->info("The [$schemaName] database created successfully with [{$connection}] connection");
     }
 
     /**

@@ -2,6 +2,13 @@
 
 namespace Guysolamour\Command;
 
+
+use Guysolamour\Command\Console\Commands\Admin\Create;
+use Guysolamour\Command\Console\Commands\Admin\Delete;
+use Guysolamour\Command\Console\Commands\Admin\Edit;
+use Guysolamour\Command\Console\Commands\Database\CreateDatabase;
+use Guysolamour\Command\Console\Commands\Database\DropDatabase;
+
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     const CONFIG_PATH = __DIR__ . '/../config/command.php';
@@ -11,6 +18,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->publishes([
             self::CONFIG_PATH => config_path('command.php'),
         ], 'config');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Create::class,
+                Delete::class,
+                Edit::class,
+                CreateDatabase::class,
+                DropDatabase::class,
+            ]);
+        }
     }
 
     public function register()
@@ -25,3 +42,4 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
     }
 }
+

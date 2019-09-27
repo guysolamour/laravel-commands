@@ -1,6 +1,6 @@
 <?php
 
-namespace Guysolamour\LaravelUsefulCommands\Console\Commands\Admin;
+namespace Guysolamour\Command\Console\Commands\Admin;
 
 use Creativeorange\Gravatar\Facades\Gravatar;
 
