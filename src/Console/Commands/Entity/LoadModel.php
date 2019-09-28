@@ -37,7 +37,7 @@ class LoadModel extends BaseEntity
     {
 
         $this->name = $name;
-        $this->fields = array_chunk($fields, 3);;
+        $this->fields = array_chunk($fields, 2);;
         $this->slug = $slug;
         $this->timestamps = $timestamps;
     }
