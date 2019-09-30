@@ -1,15 +1,17 @@
 {
   "name": "guysolamour/command",
-  "description": "A command",
+  "description": "As set of commands for laravel",
   "license": "MIT",
   "keywords": [
-    "command"
+    "command","laravel","artisan"
   ],
   "type": "library",
   "authors": [
     {
       "name": "Guy-roland ASSALE",
-      "email": "rolandassale@gmail.com"
+      "email": "rolandassale@gmail.com",
+      "homepage": "https://roland-assale.info",
+      "role": "developer"
     }
   ],
   "require": {
