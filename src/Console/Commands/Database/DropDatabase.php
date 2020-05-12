@@ -2,28 +2,26 @@
 namespace Guysolamour\Command\Console\Commands\Database;
 
 
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
 
 
-class DropDatabase extends Command
+class DropDatabase extends BaseCommand
 {
 
-    use DatabaseTrait;
-
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'db:drop {name?}';
+    protected $signature = 'commands:db:drop
+                            {database? : database name }
+                            {--u|username=root : database user }
+                            {--p|password=root : database password }
+                            {--c|connection=mysql : database connection }
+                            {--r|port=3306 : database password }
+                            ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Drop the database with default connections';
+    protected $description = 'Drop database';
 
     /**
      * Execute the console command.
@@ -40,7 +38,7 @@ class DropDatabase extends Command
 
     private function delete($connection)
     {
-        $schemaName = $this->getSchemaName($connection);
+        $schemaName = $this->getDatabaseName($connection);
 
         switch ($connection) {
             case 'sqlite':
@@ -62,7 +60,6 @@ class DropDatabase extends Command
         $databaseName = $this->guestName($schemaName);
         $url = $this->SqliteFullPath($databaseName);
         File::delete($url);
-        config(["database.connections.sqlite.database" => $databaseName]);
     }
 
     /**
@@ -70,7 +67,7 @@ class DropDatabase extends Command
      */
     private function DropMysqlDatabase($schemaName): void
     {
-        $this->query("DROP DATABASE IF  EXISTS $schemaName");
+        $this->getPDO()->exec("DROP DATABASE IF  EXISTS $schemaName");
 
     }
 }

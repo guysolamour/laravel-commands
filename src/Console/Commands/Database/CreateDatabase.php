@@ -2,14 +2,11 @@
 
 namespace Guysolamour\Command\Console\Commands\Database;
 
-use Illuminate\Console\Command;
 
 use Illuminate\Support\Facades\File;
 
-class CreateDatabase extends Command
+class CreateDatabase extends BaseCommand
 {
-
-    use DatabaseTrait;
 
 
     /**
@@ -17,24 +14,22 @@ class CreateDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'db:create {name?}';
+    protected $signature = 'commands:db:create
+                            {database? : database name }
+                            {--u|username=root : database user }
+                            {--p|password=root : database password }
+                            {--c|connection=mysql : database connection }
+                            {--r|port=3306 : database password }
+                            ';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create the database with default connections';
+    protected $description = 'Create database';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+
 
     /**
      * Execute the console command.
@@ -43,7 +38,9 @@ class CreateDatabase extends Command
      */
     public function handle()
     {
+
         $connection = $this->getConnection();
+
         $this->create($connection);
     }
 
@@ -51,7 +48,7 @@ class CreateDatabase extends Command
 
     private function create($connection)
     {
-        $schemaName = $this->getSchemaName($connection);
+        $schemaName = $this->getDatabaseName($connection);
 
         switch ($connection) {
             case 'sqlite':
@@ -77,7 +74,6 @@ class CreateDatabase extends Command
             exit;
         }
         File::put($url, null);
-        config(["database.connections.sqlite.database" => $databaseName]);
     }
 
     /**
@@ -89,7 +85,8 @@ class CreateDatabase extends Command
         $collation = config("database.connections.mysql.collation", 'utf8mb4_unicode_ci');
         $query = "CREATE DATABASE IF NOT EXISTS $schemaName CHARACTER SET $charset COLLATE $collation;";
 
-        $this->query($query);
+        $this->getPDO()->exec($query);
+
     }
 
 }

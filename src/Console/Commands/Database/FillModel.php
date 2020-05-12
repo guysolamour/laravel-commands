@@ -18,7 +18,7 @@ class FillModel extends Command
      *
      * @var string
      */
-    protected $signature = 'model:fill {name}';
+    protected $signature = 'commands:model:fill {name}';
 
     /**
      * The console command description.
@@ -46,13 +46,22 @@ class FillModel extends Command
 
         $model = $this->getNamespace() ;
 
+
+
         foreach ($parts as $value) {
             $model .= '\\' . $value;
         }
 
 
         $table_name = $this->getTableName(end($parts));
+
+
+
         $table_fields = $this->getTableFields($table_name);
+
+        new A;
+
+        dd($model, $table_name,  $table_fields);
 
         $fields = [];
 

@@ -1,6 +1,6 @@
 {
   "name": "guysolamour/laravel-commands",
-  "description": "As set of commands for laravel",
+  "description": "As suit of useful commands for laravel",
   "license": "MIT",
   "keywords": [
     "command","laravel","artisan"
@@ -16,11 +16,11 @@
   ],
   "require": {
     "php": ">=7.2",
-    "illuminate/support": "^6.0|~7.0"
+    "illuminate/support": "^6.0|^7.0"
   },
   "require-dev": {
-    "orchestra/testbench": "^4.0",
-    "phpunit/phpunit": "^8.5"
+    "orchestra/testbench": "^4.0|^5.0",
+    "phpunit/phpunit": "^8.4|^9.0"
   },
   "autoload": {
     "psr-4": {
