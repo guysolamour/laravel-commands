@@ -2,10 +2,6 @@
 
 namespace Guysolamour\Command;
 
-
-use Guysolamour\Command\Console\Commands\Admin\Edit;
-use Guysolamour\Command\Console\Commands\Admin\Create;
-use Guysolamour\Command\Console\Commands\Admin\Delete;
 use Guysolamour\Command\Console\Commands\Database\FillModel;
 use Guysolamour\Command\Console\Commands\Entity\CreateEntity;
 use Guysolamour\Command\Console\Commands\Helper\CreateHelper;
@@ -24,9 +20,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                Create::class,
-                Delete::class,
-                Edit::class,
                 CreateDatabase::class,
                 DropDatabase::class,
                 FillModel::class,
@@ -43,9 +36,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             'command'
         );
 
-        $this->app->bind('command', function () {
-            return new Command();
-        });
+        // $this->app->bind('command', function () {
+        //     return new Command();
+        // });
     }
 }
 

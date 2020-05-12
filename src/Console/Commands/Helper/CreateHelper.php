@@ -52,11 +52,11 @@ class CreateHelper extends Command
 
         // HelperServiceProvider
         if (!file_exists($this->provider_path)) {
-
             $this->info(PHP_EOL . 'Creating HelperServiceProvider...');
             $service_provider_path = $this->loadHelperServiceProvider(self::TPL_PATH);
             $this->info('ServicePovider created at ' . $service_provider_path);
         }
+
 
 
         // Create Helper
