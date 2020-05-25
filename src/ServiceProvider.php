@@ -4,9 +4,10 @@ namespace Guysolamour\Command;
 
 use Guysolamour\Command\Console\Commands\Database\FillModel;
 use Guysolamour\Command\Console\Commands\Entity\CreateEntity;
-use Guysolamour\Command\Console\Commands\Helper\CreateHelper;
 use Guysolamour\Command\Console\Commands\Database\DropDatabase;
 use Guysolamour\Command\Console\Commands\Database\CreateDatabase;
+use Guysolamour\Command\Console\Commands\Helper\CreateHelperCommand;
+use Guysolamour\Command\Console\Commands\Provider\CreateProviderCommand;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -23,8 +24,9 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 CreateDatabase::class,
                 DropDatabase::class,
                 FillModel::class,
-                CreateHelper::class,
                 CreateEntity::class,
+                CreateProviderCommand::class,
+                CreateHelperCommand::class,
             ]);
         }
     }
@@ -35,10 +37,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             self::CONFIG_PATH,
             'command'
         );
-
-        // $this->app->bind('command', function () {
-        //     return new Command();
-        // });
     }
 }
 

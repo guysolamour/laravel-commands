@@ -4,7 +4,7 @@ namespace {{namespace}}\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class HelperServiceProvider extends ServiceProvider
+class {{providerName}} extends ServiceProvider
 {
     /**
      * Register services.
@@ -13,10 +13,16 @@ class HelperServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        foreach (glob(app_path('Helpers') . '/*.php') as $file) {
-            require_once $file;
-        }
+        //
     }
 
-
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        //
+    }
 }
