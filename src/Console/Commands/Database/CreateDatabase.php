@@ -14,7 +14,7 @@ class CreateDatabase extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'commands:db:create
+    protected $signature = 'cmd:db:create
                             {database? : database name }
                             {--u|username=root : database user }
                             {--p|password=root : database password }

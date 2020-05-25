@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\File;
 class DropDatabase extends BaseCommand
 {
 
-    protected $signature = 'commands:db:drop
+    protected $signature = 'cmd:db:drop
                             {database? : database name }
                             {--u|username=root : database user }
                             {--p|password=root : database password }
