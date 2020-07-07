@@ -1,18 +1,15 @@
-# Command
+# Laravel commands
 
-[![Build Status](https://travis-ci.org/guysolamour/command.svg?branch=master)](https://travis-ci.org/guysolamour/command)
-[![styleci](https://styleci.io/repos/CHANGEME/shield)](https://styleci.io/repos/CHANGEME)
-[![Coverage Status](https://coveralls.io/repos/github/guysolamour/command/badge.svg?branch=master)](https://coveralls.io/github/guysolamour/command?branch=master)
-
-[![Packagist](https://img.shields.io/packagist/v/guysolamour/command.svg)](https://packagist.org/packages/guysolamour/command)
-[![Packagist](https://poser.pugx.org/guysolamour/command/d/total.svg)](https://packagist.org/packages/guysolamour/command)
-[![Packagist](https://img.shields.io/packagist/l/guysolamour/command.svg)](https://packagist.org/packages/guysolamour/command)
+[![Packagist](https://img.shields.io/packagist/v/guysolamour/laravel-commands.svg)](https://packagist.org/packages/guysolamour/command)
+[![Packagist](https://poser.pugx.org/guysolamour/laravel-commands/d/total.svg)](https://packagist.org/packages/guysolamour/command)
+[![Packagist](https://img.shields.io/packagist/l/guysolamour/laravel-commands.svg)](https://packagist.org/packages/guysolamour/command)
 
 This package is a collection of artisan commands for speed up developpemt with laravel framework.
 
 ## Installation
 
 Install via composer
+
 ```bash
 composer require guysolamour/laravel-commands
 ```
@@ -25,26 +22,27 @@ php artisan vendor:publish --provider="Guysolamour\Command\ServiceProvider" --ta
 
 ## Usage
 
-
 ### Create Database Command
+
 ```bash
 php artisan cmd:db:create
 ```
+
 By default, the package will look for information at the **.env** file in the database section
 
 However, you can pass the name of the database
+
 ```bash
 php artisan cmd:db:create  {name}
 ```
 
-
 Supported drivers are (mysql & sqlite).
 The connection can be changed with 'connection' option which is mysql by default.
-
 
 ```bash
 php artisan cmd:db:create {name} --connection={mysql|sqlite}
 ```
+
 For mysql driver, login credentials can be changed with the options below:
 
 ```bash
@@ -56,9 +54,11 @@ php artisan cmd:db:create {name}
 ```
 
 ### Drop Database Command
+
 ```bash
 php artisan cmd:db:drop
 ```
+
 By default, the package will look for information at the **.env** file in the database section
 
 However, you can pass the name of the database.
@@ -73,6 +73,7 @@ The connection can be changed with 'connection' option which is mysql by default
 ```bash
 php artisan cmd:db:drop {name} --connection={mysql|sqlite}
 ```
+
 For mysql driver, login credentials can be changed with the options below:
 
 ```bash
@@ -84,9 +85,11 @@ php artisan cmd:db:drop {name}
 ```
 
 ### Trait Command
+
 ```bash
 php artisan cmd:make:trait {name}
 ```
+
 Folder name can be changed with _'folder'_ option
 
 ```bash
@@ -94,9 +97,11 @@ php artisan cmd:make:trait {name} --folder={folder}
 ```
 
 ### Service Provider Command
+
 ```bash
 php artisan cmd:make:provider {name}
 ```
+
 Folder name can be changed with _'folder'_ option
 
 ```bash
@@ -104,18 +109,18 @@ php artisan cmd:make:provider {name} --folder={folder}
 ```
 
 ### Helper Command
+
 ```bash
 php artisan cmd:make:helper {name}
 ```
+
 Folder name can be changed with _'folder'_ option
 
 ```bash
 php artisan cmd:make:helper {name} --folder={folder}
 ```
 
-
-## Security
+### Security
 
 If you discover any security related issues, please email
 instead of using the issue tracker.
-
