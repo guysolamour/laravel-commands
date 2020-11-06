@@ -4,7 +4,7 @@
 [![Packagist](https://poser.pugx.org/guysolamour/laravel-commands/d/total.svg)](https://packagist.org/packages/guysolamour/command)
 [![Packagist](https://img.shields.io/packagist/l/guysolamour/laravel-commands.svg)](https://packagist.org/packages/guysolamour/command)
 
-This package is a collection of artisan commands for speed up developpemt with laravel framework.
+This package is a collection of artisan commands for speed up developmemt with laravel framework.
 
 ## Installation
 
