@@ -24,7 +24,6 @@ abstract class BaseCommand extends Command
             return $connection;
         }
         $this->error(sprintf("The [`%s`] connection is not allowed. Allowed values are [`%s`]", $connection, join(',', self::DEFAULT_CONNECTIONS)));
-        // $this->error("The connection ['{$connection}'] must be mysql or sqlite");
         exit;
     }
 

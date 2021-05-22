@@ -68,6 +68,5 @@ class DropDatabase extends BaseCommand
     private function DropMysqlDatabase($schemaName): void
     {
         $this->getPDO()->exec("DROP DATABASE IF  EXISTS $schemaName");
-
     }
 }

@@ -3,10 +3,11 @@
 namespace Guysolamour\Command\Console\Commands\Helper;
 
 
+use Illuminate\Support\Str;
+use Guysolamour\Command\Console\Commands\Filesystem;
 use Guysolamour\Command\Console\Commands\BaseCommand;
 
 class CreateHelperCommand extends BaseCommand
-
 {
     /**
      * The name and signature of the console command.
@@ -42,17 +43,10 @@ class CreateHelperCommand extends BaseCommand
     protected $folder;
 
 
+    /** @var Filesystem */
+    protected $filesystem;
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->provider_path = app_path('Providers/HelperServiceProvider.php');
-    }
+
 
     /**
      * Execute the console command.
@@ -61,18 +55,25 @@ class CreateHelperCommand extends BaseCommand
      */
     public function handle()
     {
-        $this->name = strtolower($this->argument('name'));
-        $this->folder = ucfirst($this->option('folder'));
+        $this->name   = $this->getHelperName();
+        $this->folder = $this->getHelperFolder();
+        $this->provider_path = app_path('Providers/HelperServiceProvider.php');
+        $this->filesystem = new Filesystem();
 
         $this->loadHelper();
 
-        // HelperServiceProvider
-        if (!$this->filesystem->exists($this->provider_path)) {
-            $this->loadHelperServiceProvider();
-        }
-
+        $this->loadHelperServiceProvider();
     }
 
+    private function getHelperName() :string
+    {
+        return Str::lower($this->argument('name'));
+    }
+
+    private function getHelperFolder() :string
+    {
+        return Str::lower($this->option('folder'));
+    }
 
     private function loadHelper()
     {
@@ -83,20 +84,22 @@ class CreateHelperCommand extends BaseCommand
             return;
         }
 
+        $helper_stub = $this->filesystem->compliedFile($this->getTemplatePath('/helper/helper.stub'));
 
-        $helper_stub = $this->filesystem->get($this->template_path . '/helper/helper.stub');
-
-        $this->compliedAndWriteFile(
-            $helper_stub,
+        $this->filesystem->writeFile(
             $helper_path,
+            $helper_stub
         );
 
         $this->info("{$this->name} file created at " . $helper_path);
     }
 
-
     private function loadHelperServiceProvider()
     {
+        if ($this->filesystem->exists($this->provider_path)) {
+            return;
+        }
+
         $this->call('cmd:make:provider', [
             'name'       => 'Helper',
             '--register' => true,
@@ -109,7 +112,7 @@ class CreateHelperCommand extends BaseCommand
             {
         TEXT;
 
-        $this->replaceAndWriteFile(
+        $this->filesystem->replaceAndWriteFile(
             $helper_provider,
             $search,
             <<<TEXT
@@ -122,5 +125,4 @@ class CreateHelperCommand extends BaseCommand
         );
 
     }
-
 }

@@ -14,111 +14,79 @@ Install via composer
 composer require guysolamour/laravel-commands
 ```
 
-### Publish Configuration File
-
-```bash
-php artisan vendor:publish --provider="Guysolamour\Command\ServiceProvider" --tag="config"
-```
 
 ## Usage
 
 ### Create Database Command
 
 ```bash
-php artisan cmd:db:create
+php artisan cmd:db:create databasename
 ```
 
-By default, the package will look for information at the **.env** file in the database section
-
-However, you can pass the name of the database
-
-```bash
-php artisan cmd:db:create  {name}
-```
-
-Supported drivers are (mysql & sqlite).
-The connection can be changed with 'connection' option which is mysql by default.
-
-```bash
-php artisan cmd:db:create {name} --connection={mysql|sqlite}
-```
-
-For mysql driver, login credentials can be changed with the options below:
-
-```bash
-php artisan cmd:db:create {name}
---connection={mysql|sqlite}
---username=root
---password=root
---port=3306
-```
+You can use ***--help*** option to have more informations about this command
 
 ### Drop Database Command
 
 ```bash
-php artisan cmd:db:drop
+php artisan cmd:db:drop databasename
 ```
 
-By default, the package will look for information at the **.env** file in the database section
+You can use ***--help*** option to have more informations about this command
 
-However, you can pass the name of the database.
-
-```bash
-php artisan cmd:db:drop  {name}
-```
-
-Supported drivers are (mysql & sqlite).
-The connection can be changed with 'connection' option which is mysql by default.
-
-```bash
-php artisan cmd:db:drop {name} --connection={mysql|sqlite}
-```
-
-For mysql driver, login credentials can be changed with the options below:
-
-```bash
-php artisan cmd:db:drop {name}
---connection={mysql|sqlite}
---username=root
---password=root
---port=3306
-```
 
 ### Trait Command
 
 ```bash
-php artisan cmd:make:trait {name}
+php artisan cmd:make:trait traitname
 ```
 
-Folder name can be changed with _'folder'_ option
+Folder can be changed with ***--folder*** option
 
 ```bash
-php artisan cmd:make:trait {name} --folder={folder}
+php artisan cmd:make:trait traitname --folder={folder}
 ```
+
+You can use ***--help*** option to have more informations about this command
 
 ### Service Provider Command
 
 ```bash
-php artisan cmd:make:provider {name}
+php artisan cmd:make:provider providername
 ```
 
-Folder name can be changed with _'folder'_ option
+Folder can be changed with ***--folder*** option
 
 ```bash
-php artisan cmd:make:provider {name} --folder={folder}
+php artisan cmd:make:provider providername --folder={folder}
 ```
+
+You can use ***--help*** option to have more informations about this command
 
 ### Helper Command
 
 ```bash
-php artisan cmd:make:helper {name}
+php artisan cmd:make:helper helpername
 ```
 
-Folder name can be changed with _'folder'_ option
+Folder name can be changed with ***--folder*** option
 
 ```bash
-php artisan cmd:make:helper {name} --folder={folder}
+php artisan cmd:make:helper helpername --folder={folder}
 ```
+You can use ***--help*** option to have more informations about this command
+
+### Seed Command
+
+```bash
+php artisan cmd:db:seed
+```
+
+If you want to run a specific class you can use ***--class*** option
+
+```bash
+php artisan cmd:db:seed --class=UsersTableSeeder
+```
+You can use ***--help*** option to have more informations about this command
 
 ### Security
 

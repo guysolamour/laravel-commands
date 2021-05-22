@@ -3,6 +3,8 @@
 namespace Guysolamour\Command\Console\Commands\Traits;
 
 
+use Illuminate\Support\Str;
+use Guysolamour\Command\Console\Commands\Filesystem;
 use Guysolamour\Command\Console\Commands\BaseCommand;
 
 class CreateTraitCommand extends BaseCommand
@@ -36,14 +38,8 @@ class CreateTraitCommand extends BaseCommand
      */
     protected $folder;
 
-
-
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->provider_path = app_path('Providers/HelperServiceProvider.php');
-    }
+    /** @var Filesystem */
+    protected $filesystem;
 
 
 
@@ -51,11 +47,24 @@ class CreateTraitCommand extends BaseCommand
     {
         $this->info('Initiating...');
 
-        $this->name = ucfirst($this->argument('name'));
+        $this->name       = $this->getTraitName();
+        $this->folder     = $this->getFolderName();
 
-        $this->folder = ucfirst($this->option('folder'));
+        $this->filesystem = new Filesystem($this->parseName());
+
+        // dd($this->filesystem->data_map);
 
         $this->loadTrait();
+    }
+
+    private function getTraitName() :string
+    {
+        return Str::ucfirst($this->argument('name'));
+    }
+
+    private function getFolderName() :string
+    {
+        return Str::ucfirst($this->option('folder'));
     }
 
 
@@ -68,16 +77,12 @@ class CreateTraitCommand extends BaseCommand
             return;
         }
 
-        $trait_stub = $this->filesystem->get($this->template_path . '/trait/trait.stub');
+        $trait_stub = $this->filesystem->compliedFile($this->getTemplatePath('/trait/trait.stub'));
 
-        $this->compliedAndWriteFile(
-            $trait_stub,
-            $traits_path,
-        );
+        $this->filesystem->writeFile($traits_path, $trait_stub);
 
         $this->info("{$this->name} trait created at " . $traits_path);
     }
-
 
 
     protected function parseName($name = null): array

@@ -38,7 +38,6 @@ class CreateDatabase extends BaseCommand
      */
     public function handle()
     {
-
         $connection = $this->getConnection();
 
         $this->create($connection);
@@ -69,10 +68,12 @@ class CreateDatabase extends BaseCommand
     {
         $databaseName = $this->guestName($schemaName);
         $url = $this->SqliteFullPath($databaseName);
+
         if (File::exists($url)){
             $this->error("{$databaseName} database already exists");
             exit;
         }
+
         File::put($url, null);
     }
 
@@ -86,7 +87,5 @@ class CreateDatabase extends BaseCommand
         $query = "CREATE DATABASE IF NOT EXISTS $schemaName CHARACTER SET $charset COLLATE $collation;";
 
         $this->getPDO()->exec($query);
-
     }
-
 }
