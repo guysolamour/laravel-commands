@@ -34,6 +34,59 @@ php artisan cmd:db:drop databasename
 You can use ***--help*** option to have more informations about this command
 
 
+### Seed Command
+
+```bash
+php artisan cmd:db:seed
+```
+
+If you want to run a specific class you can use ***--class*** option
+
+```bash
+php artisan cmd:db:seed --class=UsersTableSeeder
+```
+You can use ***--help*** option to have more informations about this command
+
+
+### Dump Command
+
+```bash
+php artisan cmd:db:dump
+```
+Available drivers are ***mysql, pgsql, sqlite*** and default driver is ***mysql***
+
+Host can be changed with ***--host*** option
+
+```bash
+php artisan cmd:db:dump --host sqlite
+```
+
+Username can be changed with ***--dbusername*** option
+
+```bash
+php artisan cmd:db:dump --dbusername root
+```
+
+Password can be changed with ***--dbpassword*** option
+
+```bash
+php artisan cmd:db:dump --dbpassword root
+```
+
+Database name can be changed with ***--dbname*** option
+
+```bash
+php artisan cmd:db:dump --dbname databasename
+```
+
+Dump filename can be changed with ***--filename*** option
+
+```bash
+php artisan cmd:db:dump --filename dump.sql
+```
+
+You can use ***--help*** option to have more informations about this command
+
 ### Trait Command
 
 ```bash
@@ -75,18 +128,6 @@ php artisan cmd:make:helper helpername --folder={folder}
 ```
 You can use ***--help*** option to have more informations about this command
 
-### Seed Command
-
-```bash
-php artisan cmd:db:seed
-```
-
-If you want to run a specific class you can use ***--class*** option
-
-```bash
-php artisan cmd:db:seed --class=UsersTableSeeder
-```
-You can use ***--help*** option to have more informations about this command
 
 ### Security
 

@@ -4,6 +4,7 @@ namespace Guysolamour\Command;
 
 use Guysolamour\Command\Console\Commands\Database\DropDatabase;
 use Guysolamour\Command\Console\Commands\Database\CreateDatabase;
+use Guysolamour\Command\Console\Commands\Database\DumpCommand;
 use Guysolamour\Command\Console\Commands\Database\SeedCommand;
 use Guysolamour\Command\Console\Commands\Helper\CreateHelperCommand;
 use Guysolamour\Command\Console\Commands\Traits\CreateTraitCommand;
@@ -27,6 +28,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 CreateProviderCommand::class,
                 CreateHelperCommand::class,
                 SeedCommand::class,
+                DumpCommand::class,
             ]);
         }
     }
