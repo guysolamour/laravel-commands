@@ -1,6 +1,6 @@
 {
   "name": "guysolamour/laravel-commands",
-  "description": "As suit of useful commands for laravel",
+  "description": "As suit of useful artisan commands for laravel",
   "license": "MIT",
   "keywords": [
     "command","laravel","artisan"
@@ -15,8 +15,8 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
-    "illuminate/support": "^6.0|^7.0|^8.0",
+    "php": "^8.0",
+    "illuminate/support": "^7.0|^8.0",
     "spatie/laravel-db-snapshots": "^2.0"
   },
   "require-dev": {
