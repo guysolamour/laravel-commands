@@ -67,12 +67,12 @@ class CreateHelperCommand extends BaseCommand
 
     private function getHelperName() :string
     {
-        return Str::lower($this->argument('name'));
+        return $this->argument('name');
     }
 
     private function getHelperFolder() :string
     {
-        return Str::lower($this->option('folder'));
+        return $this->option('folder');
     }
 
     private function loadHelper()
