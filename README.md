@@ -40,11 +40,25 @@ You can use ***--help*** option to have more informations about this command
 php artisan cmd:db:seed
 ```
 
+If you want to run all seed ***--all*** option
+
+```bash
+php artisan cmd:db:seed --all
+```
+
 If you want to run a specific class you can use ***--class*** option
 
 ```bash
 php artisan cmd:db:seed --class=UsersTableSeeder
 ```
+
+Run seed in production ***--force*** option
+
+```bash
+php artisan cmd:db:seed --force
+```
+
+
 You can use ***--help*** option to have more informations about this command
 
 

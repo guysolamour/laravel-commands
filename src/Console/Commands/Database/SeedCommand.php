@@ -10,7 +10,7 @@ use Guysolamour\Command\Console\Commands\Filesystem;
 
 class SeedCommand extends Command
 {
-    const SEEDERS_NAMESPACE_PREFIX = 'Database\Seeders\\';
+    const SEEDERS_NAMESPACE_PREFIX = 'Database\\Seeders\\';
 
     /** @var Filesystem */
     protected  $filesystem;
@@ -22,6 +22,8 @@ class SeedCommand extends Command
      */
     protected $signature = 'cmd:db:seed
                              {--c|class= : The seeder to run }
+                             {--all : Run all registered seed files }
+                             {--force : Force the operation to run when in production }
                              ';
 
     /**
@@ -41,13 +43,31 @@ class SeedCommand extends Command
 
     public function handle()
     {
+        if ($this->option('all')){
+            $this->runSeed();
+            exit;
+        }
+
         $seeders = Arr::wrap($this->option('class')) ?: $this->getSeedClass();
 
         foreach ($seeders as $seeder) {
-            $this->call('db:seed', [
-                '--class' => $this->getSeederWithNamespace($seeder),
-            ]);
+            $this->runSeed($seeder);
         }
+    }
+
+    private function runSeed(?string $class = null) :void
+    {
+        $options = [];
+
+        if ($class){
+            $options['--class'] =  $this->getSeederWithNamespace($class);
+        }
+
+        if ($force = $this->option('force')){
+            $options['--force'] = $force;
+        }
+
+        $this->call("db:seed", $options);
     }
 
     private function getSeederWithNamespace(string $seeder) :string
