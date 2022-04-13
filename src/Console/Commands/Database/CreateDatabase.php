@@ -30,7 +30,6 @@ class CreateDatabase extends BaseCommand
     protected $description = 'Create database';
 
 
-
     /**
      * Execute the console command.
      *
@@ -44,8 +43,7 @@ class CreateDatabase extends BaseCommand
     }
 
 
-
-    private function create($connection)
+    private function create($connection): void
     {
         $schemaName = $this->getDatabaseName($connection);
 

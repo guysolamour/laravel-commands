@@ -38,7 +38,6 @@ abstract class BaseCommand extends Command
 
     protected function getDatabaseCredentials(string $name) :string
     {
-
         if ($this->argument('database')) {
             return strtolower($this->option($name));
         }
@@ -72,7 +71,6 @@ abstract class BaseCommand extends Command
         $databaseName = $this->guestName($databaseName);
         return sprintf("%s/%s.sqlite", database_path(), $databaseName);
     }
-
 
 
     protected function getPDO() :\PDO
