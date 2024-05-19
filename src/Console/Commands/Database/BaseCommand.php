@@ -2,7 +2,7 @@
 
 namespace Guysolamour\Command\Console\Commands\Database;
 
-use Illuminate\Support\Arr;
+
 use Illuminate\Console\Command;
 
 
@@ -19,7 +19,8 @@ abstract class BaseCommand extends Command
      */
     protected function getConnection()
     {
-        $connection = $this->option('connection');
+        $connection = config('database.default');
+
         if (in_array($connection, self::DEFAULT_CONNECTIONS)) {
             return $connection;
         }
@@ -31,52 +32,46 @@ abstract class BaseCommand extends Command
 
     public function getDatabaseName() :?string
     {
-        return $this->argument('database') ?: config("database.connections.{$this->getConnection()}.database");
+        return $this->getDatabaseCredentials('database');
+    }
+
+    protected function isSqliteDriver(): bool
+    {
+        return $this->getDatabaseCredentials('driver') === self::DEFAULT_CONNECTIONS[0];
+
+    }
+
+    protected function isNotSqliteDriver(): bool
+    {
+        return !$this->isSqliteDriver();
+
     }
 
 
 
-    protected function getDatabaseCredentials(string $name) :string
+    protected function getDatabaseCredentials(string $key) :string
     {
-        if ($this->argument('database')) {
-            return strtolower($this->option($name));
-        }
 
-        $credential = config("database.connections." . $this->option('connection') . ".$name");
+        $credential = config("database.connections." . $this->getConnection() . ".$key");
+
         if(!$credential){
-            $this->error("The {$name} credentials not found in " . $this->option('connection'));
+            $this->error("The {$key} credentials not found in " . $this->getConnection());
             exit;
         }
 
-        return strtolower($credential);
+        return $credential;
     }
 
 
-    /**
-     * Guest sqlite database name and give the full url if its a sqlite connection used
-     * @param $schemaName
-     * @return string
-     */
-    protected function guestName(string $schemaName): string
-    {
-        $nameWithExtension = Arr::last(explode('/', $schemaName));
 
-        $name = Arr::first(explode('.', $nameWithExtension));
-
-        return $name;
-    }
-
-    protected function SqliteFullPath(string $databaseName): string
-    {
-        $databaseName = $this->guestName($databaseName);
-        return sprintf("%s/%s.sqlite", database_path(), $databaseName);
-    }
 
 
     protected function getPDO() :\PDO
     {
+        $statement = sprintf("%s:host=%s;port=%scharset=%s", $this->getConnection(), $this->getDatabaseCredentials('host'), $this->getDatabaseCredentials('port'), $this->getDatabaseCredentials('charset'));
+
         try {
-            return new \PDO("mysql:host=localhost;port={$this->getDatabaseCredentials('port')}charset=utf8",$this->getDatabaseCredentials('username'), $this->getDatabaseCredentials('password'));
+            return new \PDO($statement,$this->getDatabaseCredentials('username'), $this->getDatabaseCredentials('password'));
         } catch (\Throwable $th) {
             $this->error('Connection to mysql server failed. Check if login credentials given are correct.');
             exit;

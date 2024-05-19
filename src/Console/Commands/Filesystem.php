@@ -25,6 +25,7 @@ class Filesystem extends Fsystem
         return strtr($file, $data_map);
     }
 
+
     public function complied(string $file, ?array $data_map = null): string
     {
         $data_map ??= $this->data_map;

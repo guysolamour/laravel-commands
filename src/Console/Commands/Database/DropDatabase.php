@@ -2,19 +2,13 @@
 namespace Guysolamour\Command\Console\Commands\Database;
 
 
-use Illuminate\Support\Facades\File;
+use Guysolamour\Fsystem\Fsystem;
 
 
 class DropDatabase extends BaseCommand
 {
 
-    protected $signature = 'cmd:db:drop
-                            {database? : database name }
-                            {--u|username=root : database user }
-                            {--p|password=root : database password }
-                            {--c|connection=mysql : database connection }
-                            {--r|port=3306 : database password }
-                            ';
+    protected $signature = 'cmd:db:drop';
 
     /**
      * The console command description.
@@ -23,6 +17,9 @@ class DropDatabase extends BaseCommand
      */
     protected $description = 'Drop database';
 
+    protected string $connection;
+
+
     /**
      * Execute the console command.
      *
@@ -30,42 +27,41 @@ class DropDatabase extends BaseCommand
      */
     public function handle()
     {
-        $connection = $this->getConnection();
-        $this->delete($connection);
+        $this->connection = $this->getConnection();
+        $this->delete();
     }
 
 
 
-    private function delete($connection)
+    private function delete()
     {
-        $schemaName = $this->getDatabaseName($connection);
+        $schemaName = $this->getDatabaseName($this->connection);
 
-        switch ($connection) {
-            case 'sqlite':
-                $this->DropSqliteDatabase($schemaName);
-                break;
-            case 'mysql':
-                $this->DropMysqlDatabase($schemaName);
-                break;
+        $this->isSqliteDriver() ? $this->DropSqliteDatabase($schemaName) :  $this->DropMysqlDatabase($schemaName);
+
+        $this->info("The [$schemaName] database deleted successfully with [{$this->connection}]");
+    }
+
+    /**
+     * @param $schemaName
+     */
+    private function DropSqliteDatabase(string $path): void
+    {
+        $fsystem = new Fsystem();
+
+        if ($fsystem->missing($path)){
+            $this->error("{$path} database does not exist");
+            exit;
         }
 
-        $this->info("The [$schemaName] database deleted successfully with [{$connection}]");
+        $fsystem->delete($path);
+
     }
 
     /**
      * @param $schemaName
      */
-    private function DropSqliteDatabase($schemaName): void
-    {
-        $databaseName = $this->guestName($schemaName);
-        $url = $this->SqliteFullPath($databaseName);
-        File::delete($url);
-    }
-
-    /**
-     * @param $schemaName
-     */
-    private function DropMysqlDatabase($schemaName): void
+    private function DropMysqlDatabase(string $schemaName): void
     {
         $this->getPDO()->exec("DROP DATABASE IF  EXISTS $schemaName");
     }

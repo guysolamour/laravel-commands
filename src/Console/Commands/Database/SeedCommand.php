@@ -3,17 +3,13 @@
 
 namespace Guysolamour\Command\Console\Commands\Database;
 
+
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Console\Command;
-use Guysolamour\Command\Console\Commands\Filesystem;
+use Guysolamour\Fsystem\Fsystem;
 
-class SeedCommand extends Command
+// class SeedCommand extends Command
+class SeedCommand extends BaseCommand
 {
-    const SEEDERS_NAMESPACE_PREFIX = 'Database\\Seeders\\';
-
-    /** @var Filesystem */
-    protected  $filesystem;
 
     /**
      * The name and signature of the console command.
@@ -34,12 +30,6 @@ class SeedCommand extends Command
     protected $description = 'Seed the database with records';
 
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->filesystem = new Filesystem;
-    }
 
     public function handle()
     {
@@ -48,19 +38,20 @@ class SeedCommand extends Command
             exit;
         }
 
-        $seeders = Arr::wrap($this->option('class')) ?: $this->getSeedClass();
+        $seeders = Arr::wrap($this->option('class')) ?: $this->getAllSeeders();
 
         foreach ($seeders as $seeder) {
             $this->runSeed($seeder);
         }
     }
 
+
     private function runSeed(?string $class = null) :void
     {
         $options = [];
 
         if ($class){
-            $options['--class'] =  $this->getSeederWithNamespace($class);
+            $options['--class'] =  $class;
         }
 
         if ($force = $this->option('force')){
@@ -70,34 +61,19 @@ class SeedCommand extends Command
         $this->call("db:seed", $options);
     }
 
-    private function getSeederWithNamespace(string $seeder) :string
-    {
-        if (Str::startsWith($seeder, self::SEEDERS_NAMESPACE_PREFIX)){
-            return $seeder;
-        }
 
-        return self::SEEDERS_NAMESPACE_PREFIX . $seeder;;
-    }
-
-    private function getSeedClass(): array
+    private function getAllSeeders(): array
     {
-        $files = collect($this->filesystem->allFiles(database_path('seeders')))
-            ->map(fn ($file) => $file->getRelativePathname());
+        $fsystem = new Fsystem();
+
+        $files = collect($fsystem->allFiles(database_path('seeders')))
+                    ->map(fn ($file) =>  $file->getFilenameWithoutExtension());
 
         if ($files->isEmpty()) {
             $this->line("No class available to run");
             exit;
         }
 
-        $seeders =  $this->choice("Which class do you want to run ?", $files->toArray(), null, null, true);
-
-        return array_map(function ($seeder) {
-            return $this->removeExtension(str_replace('/', '\\', $seeder));
-        }, $seeders);
-    }
-
-    private function removeExtension(string $file): string
-    {
-        return Str::beforeLast($file, '.');
+        return  $this->choice("Which class do you want to run ?", $files->toArray(), null, null, true);
     }
 }

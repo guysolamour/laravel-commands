@@ -4,11 +4,16 @@ namespace Guysolamour\Command\Console\Commands\Helper;
 
 
 use Illuminate\Support\Str;
-use Guysolamour\Command\Console\Commands\Filesystem;
+// use Guysolamour\Command\Console\Commands\fsystem;
+use Guysolamour\Fsystem\Fsystem;
 use Guysolamour\Command\Console\Commands\BaseCommand;
 
 class CreateHelperCommand extends BaseCommand
 {
+    protected const HELPER_STUB = "/helper/helper.stub";
+
+    protected const HELPER_SERVICE_PROVIDER = "HelperServiceProvider";
+
     /**
      * The name and signature of the console command.
      *
@@ -25,26 +30,10 @@ class CreateHelperCommand extends BaseCommand
      */
     protected $description = 'Create helper file';
 
-    /**
-     *  @var string
-     */
-    protected $provider_path;
 
 
-    /**
-     *  @var string
-     */
-    protected $name;
-
-
-    /**
-     *  @var string
-     */
-    protected $folder;
-
-
-    /** @var Filesystem */
-    protected $filesystem;
+    /** @var Fsystem */
+    protected $fsystem;
 
 
 
@@ -55,73 +44,72 @@ class CreateHelperCommand extends BaseCommand
      */
     public function handle()
     {
-        $this->name   = $this->getHelperName();
-        $this->folder = $this->getHelperFolder();
-        $this->provider_path = app_path('Providers/HelperServiceProvider.php');
-        $this->filesystem = new Filesystem();
+        $this->fsystem = new Fsystem();
 
-        $this->loadHelper();
+        $this->createHelperFile();
 
         $this->loadHelperServiceProvider();
     }
 
-    private function getHelperName() :string
-    {
-        return $this->argument('name');
-    }
+    private function createHelperFile() {
+        $path = app_path(sprintf('%s/%s.php', $this->option('folder'), $this->argument('name')));
 
-    private function getHelperFolder() :string
-    {
-        return $this->option('folder');
-    }
-
-    private function loadHelper()
-    {
-        $helper_path = app_path(sprintf('%s/%s.php', $this->folder, $this->name));
-
-        if ($this->filesystem->exists($helper_path)) {
-            $this->error("The [{$this->name}] helper already exists");
+        if ($this->fsystem->exists($path)) {
+            $this->error("The [{$path}] helper already exists");
             return;
         }
 
-        $helper_stub = $this->filesystem->compliedFile($this->getTemplatePath('/helper/helper.stub'));
+        $stub = $this->fsystem->compliedFile($this->getTemplatePath(self::HELPER_STUB));
 
-        $this->filesystem->writeFile(
-            $helper_path,
-            $helper_stub
+        $this->fsystem->writeFile(
+            $path,
+            $stub
         );
 
-        $this->info("{$this->name} file created at " . $helper_path);
+        $this->loadHelperServiceProvider();
+
+        $this->info("{$path} file created.");
     }
+
+    private function getHelperServiceProviderPath() : string {
+        return app_path(sprintf('Providers/%s.php', self::HELPER_SERVICE_PROVIDER));
+    }
+
+    private function checkIfHelperServiceProviderExists() : bool {
+        return $this->fsystem->exists($this->getHelperServiceProviderPath());
+    }
+
+
 
     private function loadHelperServiceProvider()
     {
-        if ($this->filesystem->exists($this->provider_path)) {
+        if ($this->checkIfHelperServiceProviderExists()) {
             return;
         }
 
-        $this->call('cmd:make:provider', [
-            'name'       => 'Helper',
-            '--register' => true,
+        $this->call('make:provider', [
+            'name'  => self::HELPER_SERVICE_PROVIDER,
         ]);
 
-        $helper_provider = $this->filesystem->get($this->provider_path);
+        $path     = $this->getHelperServiceProviderPath();
+        $folder   = $this->option('folder');
+        $provider = $this->fsystem->get($path);
 
         $search = <<<TEXT
-            public function register()
+            public function register(): void
             {
         TEXT;
 
-        $this->filesystem->replaceAndWriteFile(
-            $helper_provider,
+        $this->fsystem->replaceAndWriteFile(
+            $provider,
             $search,
             <<<TEXT
             $search
-                    foreach (glob(app_path('$this->folder') . '/*.php') as \$file) {
+                    foreach (glob(app_path('$folder') . '/*.php') as \$file) {
                         require_once \$file;
                     }
             TEXT,
-            $this->provider_path
+            $path
         );
 
     }

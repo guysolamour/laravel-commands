@@ -17,24 +17,45 @@ composer require guysolamour/laravel-commands
 
 ## Usage
 
-### Create Database Command
+### Create database
 
 ```bash
-php artisan cmd:db:create databasename
+php artisan cmd:db:create
 ```
 
-You can use ***--help*** option to have more informations about this command
+Fill **.env** database credentials before using this command.
 
-### Drop Database Command
+**NB:**
+
+- Supported drivers are (mysql & sqlite)
+
+
+### Dump database
 
 ```bash
-php artisan cmd:db:drop databasename
+php artisan cmd:db:dump {filename=dump.sql}
 ```
 
-You can use ***--help*** option to have more informations about this command
+Fill **.env** database credentials before using this command.
+
+**NB:**
+
+- Supported drivers are (mysql & sqlite)
 
 
-### Seed Command
+### Drop a database
+
+```bash
+php artisan cmd:db:drop
+```
+
+Fill **.env** database credentials before using this command.
+
+**NB:**
+
+- Supported drivers are (mysql & sqlite)
+
+### Seed database
 
 ```bash
 php artisan cmd:db:seed
@@ -59,77 +80,8 @@ php artisan cmd:db:seed --force
 ```
 
 
-You can use ***--help*** option to have more informations about this command
 
-
-### Dump Command
-
-```bash
-php artisan cmd:db:dump
-```
-Available drivers are ***mysql, pgsql, sqlite*** and default driver is ***mysql***
-
-Host can be changed with ***--host*** option
-
-```bash
-php artisan cmd:db:dump --host sqlite
-```
-
-Username can be changed with ***--dbusername*** option
-
-```bash
-php artisan cmd:db:dump --dbusername root
-```
-
-Password can be changed with ***--dbpassword*** option
-
-```bash
-php artisan cmd:db:dump --dbpassword root
-```
-
-Database name can be changed with ***--dbname*** option
-
-```bash
-php artisan cmd:db:dump --dbname databasename
-```
-
-Dump filename can be changed with ***--filename*** option
-
-```bash
-php artisan cmd:db:dump --filename dump.sql
-```
-
-You can use ***--help*** option to have more informations about this command
-
-### Trait Command
-
-```bash
-php artisan cmd:make:trait traitname
-```
-
-Folder can be changed with ***--folder*** option
-
-```bash
-php artisan cmd:make:trait traitname --folder={folder}
-```
-
-You can use ***--help*** option to have more informations about this command
-
-### Service Provider Command
-
-```bash
-php artisan cmd:make:provider providername
-```
-
-Folder can be changed with ***--folder*** option
-
-```bash
-php artisan cmd:make:provider providername --folder={folder}
-```
-
-You can use ***--help*** option to have more informations about this command
-
-### Helper Command
+### Create helper file
 
 ```bash
 php artisan cmd:make:helper helpername
@@ -140,7 +92,6 @@ Folder name can be changed with ***--folder*** option
 ```bash
 php artisan cmd:make:helper helpername --folder={folder}
 ```
-You can use ***--help*** option to have more informations about this command
 
 
 ### Security
